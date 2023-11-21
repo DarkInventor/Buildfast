@@ -64,7 +64,7 @@ def load_user(user_id):
     return User.get(user_id)
 
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 
 def analyze_image(base64_image):
