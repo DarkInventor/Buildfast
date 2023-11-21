@@ -2,3 +2,6 @@ venv/
 .env
 config/serviceAccountKey.json
 __pycache__/
+
+# Ignore the .env file
+.env
