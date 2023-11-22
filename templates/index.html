@@ -41,42 +41,7 @@
 
     <button id="copyButton" class="btn btn-outline-light mt-2">Copy Code</button> -->
 
-    <div class="container mt-4 p-1 border rounded" style="width:500px;">
-      <div class="row mx-auto">
-          <div class="col text-center mt-2 ml-3">
-              <p><img width="50" class="border rounded-circle" src="{{current_user.profile_pic}}"></p>
-          </div>
-          <div class="col text-center text-2xl">
-              <h2>Ayooo, {{current_user.name}}!</h2>
-          </div>
-          <div class="col text-center mt-3">
-              <p><a class="border p-2 rounded hover-overlay ripple shadow-1-strong bg-light" style="color:black; width: 20%;" href="/logout">Logout</a></p>
-          </div>
-          <!-- <p><img src="{{current_user.profile_pic}}"></p>-->
-      
-      </div>
-  </div>
-
-  <div class="container mt-5 mx-auto">
-      <h2 class="mb-4 text-4xl">-- Create beautiful HTML + Tailwind CSS Landing Pages from Screenshots✨ --</h2>
-      
-      <form action="/upload" method="post" enctype="multipart/form-data">
-          <div class="form-group">
-              <label for="imageUpload">Choose an image:</label>
-              <input type="file" class="form-control-file " id="imageUpload" name="file" accept="image/*" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Upload and Analyze</button>
-      </form>
-      
-      <div id="result" class="mt-4"></div>
-  
-  
-      <textarea id="code" class="form-control mt-4" rows="10" readonly>{{ code }}</textarea>
-  
-  
-      <button id="copyButton" class="btn btn-outline-light mt-2">Copy Code</button>
-
-
+    
 
     {% if current_user.is_authenticated %}
     <div class="container mt-4 p-1 border rounded" style="width:500px;">
