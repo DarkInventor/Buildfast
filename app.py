@@ -183,7 +183,7 @@ def login():
 def callback():
     # Get authorization code Google sent back to you
     code = request.args.get("code")
-
+    print("codeeeeeee", code)
     # Find out what URL to hit to get tokens that allow you to ask for
     # things on behalf of a user
     google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
