@@ -169,7 +169,7 @@ def login():
     print("request base url", request.base_url)
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri="https://buildfast.onrender.com/" + "/callback",       
+        redirect_uri="https://buildfast.onrender.com/login/callback",       
         # redirect_uri=request.base_url.replace('http://', 'https://') + "/callback",
         scope=["openid", "email", "profile"],
     )
