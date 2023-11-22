@@ -162,6 +162,7 @@ def login():
     # Find out what URL to hit for Google login
     google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
     authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+    print("authorisation_endpoint", authorization_endpoint)
     print("here's my google client id: ", GOOGLE_CLIENT_ID)
     # Use library to construct the request for Google login and provide
     # scopes that let you retrieve user's profile from Google
@@ -171,7 +172,9 @@ def login():
         # redirect_uri=request.base_url.replace('http://', 'https://') + "/callback",
         scope=["openid", "email", "profile"],
     )
+    print("req uri", request_uri)
     return redirect(request_uri)
+
 
 
 @app.route("/login/callback")
