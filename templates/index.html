@@ -46,7 +46,7 @@
     {% if current_user.is_authenticated %}
     <div class="container mt-4 p-1 border rounded" style="width:500px;">
         <div class="row mx-auto">
-            <div class="col text-center mt-2 ml-3">
+            <div class="col text-center mt-1 ml-3">
                 <p><img width="50" class="border rounded-circle" src="{{current_user.profile_pic}}"></p>
             </div>
             <div class="col text-center text-2xl">
@@ -68,15 +68,17 @@
                 <label for="imageUpload">Choose an image:</label>
                 <input type="file" class="form-control-file " id="imageUpload" name="file" accept="image/*" required>
             </div>
-            <button type="submit" class="btn btn-primary">Upload and Analyze</button>
+            <button type="submit" class="btn btn-primary">Upload and Generate Code</button>
         </form>
         
         <div id="result" class="mt-4"></div>
     
     
         <textarea id="code" class="form-control mt-4" rows="10" readonly>{{ code }}</textarea>
+
+        <button id="copyButton" class="btn btn-outline-light mt-2">Copy Code</button> 
       
-        <h3 class="mb-4 text-2xl mt-4">Preview✨</h3>
+        <h3 class="mb-4 text-2xl mt-4">Preview</h3>
         <iframe id="codeFrame" class="form-control mt-4" srcdoc="{{ code }}" style="width:100%; height:650px;"></iframe>
 
 {% else %}
