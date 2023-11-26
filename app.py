@@ -260,8 +260,8 @@ def callback():
 def success():
     user = User.get(current_user.id)  # get user by id
     user.activate()
-    return render_template('index.html')
-
+    return redirect(url_for('index'))
+        
 @app.route('/conditionn')
 def conditionn():
     if current_user.is_authenticated: 
