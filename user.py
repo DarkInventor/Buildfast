@@ -50,6 +50,6 @@ class User(UserMixin):
     def activate(self):
         db = firestore.client()
         user_ref = db.collection('users').document(self.id)
-        user_ref.update({
+        user_ref.set({
             'has_paid': True
         }, merge=True)
