@@ -260,7 +260,7 @@ def callback():
 def success():
     user = User.get(current_user.id)  # get user by id
     user.activate()
-    return redirect(url_for('index'))
+    return render_template("index.html")
         
 @app.route('/conditionn')
 def conditionn():
