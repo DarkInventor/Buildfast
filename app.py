@@ -1,21 +1,28 @@
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, jsonify, redirect, url_for, render_template, request
 from flask_login import LoginManager, login_required, logout_user, current_user, login_user
 from oauthlib.oauth2 import WebApplicationClient
 import json
 import requests
+import stripe
 from user import User
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import base64
 from dotenv import load_dotenv
 import os
+from flask_login import current_user
 
 load_dotenv()
 
-# Configuration
+# Google Authentication Configuration
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
+
+#Stripe Configuration
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+stripe.api_key = STRIPE_SECRET_KEY
 
 # Flask app setup
 app = Flask(__name__)
@@ -235,11 +242,40 @@ def callback():
 
     # Begin user session by logging the user in
     login_user(user)
-
+    return redirect(url_for('conditionn'))
     # Send user back to homepage
-    return redirect(url_for("index"))
+
+    # user = User.get_by_id(id)  # get user by id
+    # if user.is_active:
+    #     return redirect(url_for('index'))  # redirect to dashboard
+    # else:
+    #     payment_link="https://buy.stripe.com/28o5nt7E8fml3bW5kq"
+    #     return redirect(url_for('payment_link'))
 
 
+
+
+#stripe payment success action
+@app.route('/success')
+def success():
+    user = User.get(current_user.id)  # get user by id
+    user.activate()
+    return render_template('index.html')
+
+@app.route('/conditionn')
+def conditionn():
+    if current_user.is_authenticated: 
+        user = User.get(current_user.id)  # get user by id
+        if user.has_paid:
+            return success()
+        else:
+            # payment_link="https://buy.stripe.com/28o5nt7E8fml3bW5kq"
+            # return redirect(url_for('payment_link'))
+            return redirect("https://buy.stripe.com/28o5nt7E8fml3bW5kq")
+
+    else:
+        return "please login to continue"
+    
 @app.route("/logout")
 @login_required
 def logout():
