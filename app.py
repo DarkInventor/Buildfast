@@ -266,7 +266,7 @@ def success():
 def conditionn():
     if current_user.is_authenticated: 
         user = User.get(current_user.id)  # get user by id
-        if user.has_paid:
+        if user.has_paid==True:
             return success()
         else:
             # payment_link="https://buy.stripe.com/28o5nt7E8fml3bW5kq"
