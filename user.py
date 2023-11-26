@@ -31,7 +31,7 @@ class User(UserMixin):
         user = user_ref.get()
         if user.exists:
             user_data = user.to_dict()
-            return User(user_data['id'], user_data['name'], user_data['email'], user_data['profile_pic'])
+            return User(user_data['id'], user_data['name'], user_data['email'], user_data['profile_pic'], has_paid=user_data['has_paid'])
         else:
             return None
 
