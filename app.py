@@ -266,9 +266,10 @@ def success():
 def conditionn():
     if current_user.is_authenticated: 
         user = User.get(current_user.id)  # get user by id
-        if user.has_paid:
+        print("user.has_paid", user.has_paid)
+        if user.has_paid==True:
             return redirect(url_for('success'))
-        else:
+        if user.has_paid==False:
             # payment_link="https://buy.stripe.com/28o5nt7E8fml3bW5kq"
             # return redirect(url_for('payment_link'))
             return redirect("https://buy.stripe.com/28o5nt7E8fml3bW5kq")
