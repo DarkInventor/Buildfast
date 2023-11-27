@@ -272,7 +272,7 @@ def conditionn():
         if user.has_paid==False:
             # payment_link="https://buy.stripe.com/28o5nt7E8fml3bW5kq"
             # return redirect(url_for('payment_link'))
-            return redirect("https://buy.stripe.com/28o5nt7E8fml3bW5kq")
+            return redirect("https://buy.stripe.com/fZeaHN3nS8XXeUE3cn")
 
     else:
         return "please login to continue"
