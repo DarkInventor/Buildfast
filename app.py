@@ -242,7 +242,7 @@ def callback():
 
     # Begin user session by logging the user in
     login_user(user)
-    return redirect(url_for('conditionn'))
+    return redirect(url_for('index'))
     # Send user back to homepage
 
     # user = User.get_by_id(id)  # get user by id

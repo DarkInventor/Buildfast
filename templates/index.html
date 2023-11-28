@@ -45,7 +45,7 @@
 
     
 
-    {% if current_user.is_authenticated and current_user.has_paid %}
+    {% if current_user.is_authenticated %}
     <div class="container mt-4 p-1 border rounded" style="width:500px;">
         <div class="row mx-auto">
             <div class="col text-center mt-1 ml-3">
@@ -64,14 +64,26 @@
 
     <div class="container mt-5 mx-auto">
         <h2 class="mb-4 text-4xl">Create beautiful HTML + Tailwind CSS Landing Pages from Screenshots✨</h2>
-        
+        {% if current_user.has_paid %}
         <form action="/upload" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="imageUpload">Choose an image:</label>
                 <input type="file" class="form-control-file " id="imageUpload" name="file" accept="image/*" required>
-            </div>
+            </div>            
             <button type="submit" class="btn btn-primary">Upload and Generate Code</button>
         </form>
+        {% else %}
+        <p class="text-xl mt-2 mb-3">-- Please note you haven't paid yet, you get only 2-3 free generations to checkout Buildfast until you pay --</p>
+        <a href="https://buy.stripe.com/fZeaHN3nS8XXeUE3cn" class="text-blue-500 hover:text-blue-700"><p class="text-lg mt-3 mb-3">Click here to pay now and start generating 100s of Landing Pages with Buildfast :)</p></a>
+        <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="return handleClick()">
+          <div class="form-group">
+              <label for="imageUpload">Choose an image:</label>
+              <input type="file" class="form-control-file " id="imageUpload" name="file" accept="image/*" required>
+          </div>       
+          <button id="uploadButton" type="submit" class="btn btn-primary" onclick="handleClick()">Upload and Generate Code</button>
+        </form>
+      <!--  <button onclick="deleteCookie('clickCount')">Reset Click Count</button>-->
+        {% endif %}
         
         <div id="result" class="mt-4"></div>
     
@@ -84,12 +96,12 @@
         <iframe id="codeFrame" class="form-control mt-4" srcdoc="{{ code }}" style="width:100%; height:650px;"></iframe>
 
 {% else %}
-{% if current_user.is_authenticated %}
+<!-- {% if current_user.is_authenticated %}
 <script>
   // Use JavaScript to automatically redirect to the logout URL
   window.location.href = "{{ url_for('logout') }}";
-</script>
-{% endif %}
+</script> 
+{% endif %} -->
 <nav class="flex flex-wrap items-center justify-between p-6">
     <!-- navigation links left -->
     <div class="flex items-center text-gray-400 space-x-10 mx-auto ">   
@@ -380,6 +392,55 @@
         document.execCommand('copy');
     });
   </script>
+
+  <script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function handleClick() {
+        var clickCount = getCookie('clickCount') || 0;
+        clickCount++;
+        setCookie('clickCount', clickCount, 365);
+        if (clickCount >= 3) {
+          setTimeout(function() {
+            document.getElementById('uploadButton').disabled = true;
+        }, 10);
+        }
+    }
+
+    window.onload = function() {
+        var clickCount = getCookie('clickCount') || 0;
+        if (clickCount >= 3) {
+            document.getElementById('uploadButton').disabled = true;
+        }
+    }
+</script>
+<script>
+  function deleteCookie(cname) {
+      document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+  // ... existing code ...
+</script>
 
 </body>
 </html> 
