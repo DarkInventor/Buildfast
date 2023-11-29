@@ -117,13 +117,15 @@ def analyze_image(base64_image):
                     {
                         "type": "image",
                         "image_url": {
-                            "url": f"data:image/png;base64,{base64_image}"
+                            "url": f"data:image/png;base64,{base64_image}",
+                            "detail": "high"
                         }
                     }
                 ]
             }
         ],
-        "max_tokens": 4096
+        "max_tokens": 4096,
+        "temperature": 0   
     }
 
     response = requests.post(
