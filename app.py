@@ -112,6 +112,7 @@ def analyze_image(base64_image):
                 "content": [
                     {
                         "type": "text",
+                        # "text": """ Assess this, verify it and generate the prompt to create a web page using HTML, Tailwind CSS and Javascript that looks exactly like this."""
                         "text": """ Generate code for a web page that looks exactly like this. """
                     },
                     {
@@ -132,6 +133,7 @@ def analyze_image(base64_image):
         "https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     analysis_result = response.json().get('choices', [{}])[
         0].get('message', {}).get('content', '')
+    #run the if statement of loop here to compare analysis_result with the base64_image. if the analysis_result code doesn't match exact with the base64_image then analyze, improve and the code and update the analysis_result. You have to follow this: 1. base64_image to analalysis_result 2. analysis_result to base64_image comparision 3. base64_image to updated code for analysis_result
     print(response.json())
     return response.json(), analysis_result
 
