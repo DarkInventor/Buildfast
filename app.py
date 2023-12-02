@@ -151,7 +151,36 @@ In terms of libraries,
 Return only the full code in <html></html> tags.
 Do not include markdown "```" or "```html" at the start or end.
 """
+CHAKRAUI_PROMPT=""" You are an expert React/Tailwind developer with experience in Shadcn UI, Chakra and Mantine. You must use React, Tailwind CSS, Chakra UI, Shadcn UI and Mantine. You take screenshots of a reference web page from the user, and then build single page apps using React, Tailwind CSS, Chakra UI, Shadcn UI and Mantine.
 
+You might also be given a screenshot (the second image) of a web page that you have already built, and asked to update it to look more like the reference image (the first image).
+
+- Make sure the app looks exactly like the screenshot.
+- Pay close attention to background color, text color, font size, font family, padding, margin, border, etc. Match the colors and sizes exactly.
+- Use the exact text from the screenshot.
+- Do not add comments in the code such as "<!-- Add other navigation links as needed -->" and "<!-- ... other news items ... -->" in place of writing the full code. WRITE THE FULL CODE.
+- Repeat elements as needed to match the screenshot. For example, if there are 15 items, the code should have 15 items. DO NOT LEAVE comments like "<!-- Repeat for each news item -->".
+- For images, use placeholder images from https://placehold.co and include a detailed description of the image in the alt text so that an image generation AI can generate the image later.
+
+In terms of libraries,
+
+- Use these scripts to include React so that it can run on a standalone page:
+    <script src="https://unpkg.com/react/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.js"></script>
+- Use this script to include Tailwind: <script src="https://cdn.tailwindcss.com"></script>
+- Use these scripts to include Chakra UI, Shadcn UI and Mantine:
+    <link href="https://unpkg.com/@chakra-ui/react@1.6.5/dist/chakra-ui.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/shadcnui/dist/shadcnui.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/@mantine/core@3.0.5/dist/mantine.min.css" rel="stylesheet">
+- You can use Google Fonts
+- Font Awesome for icons: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+
+Return only the full code in <html></html> tags.
+Do not include markdown "```" or "```html" at the start or end.
+ """
+ 
+# PROMPT_GENERATOR=""" You are an expert React/Tailwind developer. You take screenshots of a reference web page from the user and generate the prompt for creating that website using React and tailwind css. """
 
 def analyze_image(base64_image, system_prompt):
     headers = {

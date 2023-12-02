@@ -21,7 +21,7 @@
       .custom-font-opensans { font-family: 'Open Sans', sans-serif; }
     </style>    
 </head>
-<body style="color: white; background: black;">
+<body style="color: white; background: black;" class="lg:max-w-screen-xl mx-auto md:w-[970px]">
  
 <!-- <div class="container mt-5">
     <h2 class="mb-4">Create beautiful HTML + Tailwind CSS Landing Pages from Screenshots✨</h2>
@@ -43,10 +43,18 @@
     <button id="copyButton" class="btn btn-outline-light mt-2">Copy Code</button> -->
 
     
-
+    
     {% if current_user.is_authenticated %}
-    <div class="container mt-4 p-1 border rounded" style="width:500px;">
-        <div class="row mx-auto">
+    <div class="container mt-4 p-1 border rounded sm:w-auto lg:w-[500px]">
+     <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);"></div>  
+      <!--<div id="overlay" style="display: none; position: fixed; top: 40; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);"></div> -->
+
+      <!-- Modify this div for the loading animation -->
+      <div id="loading" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, 0); z-index: 9999;">
+          <img src="https://community.facer.io/uploads/default/original/3X/d/7/d75e4441b2f05b6ae418d09680d265608c266c13.gif" alt="Loading..." />
+        </div>
+      <div class="row mx-auto">
+        
             <div class="col text-center mt-1 ml-3">
                 <p><img width="50" class="border rounded-circle" src="{{current_user.profile_pic}}"></p>
             </div>
@@ -61,25 +69,25 @@
         </div>
     </div>
 
-    <div class="container mt-5 mx-auto">
+    <div class="container mt-5 mx-auto" style="display: flex; flex-direction: column; align-items: center; max-width: 1000px; margin: 0 auto;">
       <blockquote class="text-2xl font-semibold italic text-white">
         Create beautiful
-        <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-blue-600 relative inline-block">
+        <span class="before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-blue-600 relative inline-block" style="z-index:-1">
           <span class="relative text-white">Landing Pages</span>
         </span>
         from Screenshots✨
       </blockquote>
         <!--<h2 class="mb-4 text-4xl">Create beautiful HTML + Tailwind CSS Landing Pages from Screenshots✨</h2>-->
         {% if current_user.has_paid %}
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <div class="form-group mt-3">
+        <form action="/upload" method="post" enctype="multipart/form-data" onsubmit="showLoadingAnimation()">
+            <div class="form-group mt-4">
               <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-white">Choose an image:</h3>
                 <input type="file" class="mb-3 form-control-f block w-full text-sm text-slate-500
                 file:mr-4 file:py-2 file:px-4
                 file:rounded-full file:border-0
                 file:text-sm file:font-semibold
                 file:bg-violet-50 file:text-black-700
-                hover:file:bg-blue-200" id="imageUpload" name="file" accept="image/*" required>
+                hover:file:bg-blue-200 mx-auto" id="imageUpload" name="file" accept="image/*" required>        
                 <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-white">Select a Language/Framework to get the code:</h3>
 <ul class="grid w-full gap-4 md:grid-cols-3">
     <li>
@@ -135,12 +143,15 @@
         <div id="result" class="mt-4"></div>
     
         
-        <textarea id="code" class="form-control mt-4" rows="10" readonly>{{ code }}</textarea>
+        <textarea id="code" class="form-control mt-4 w-full mx-auto my-auto" rows="10" readonly>{{ code }}</textarea>
 
-        <button id="copyButton" class="btn btn-outline-light mt-2">Copy Code</button> 
+        <button id="copyButton" class="btn btn-outline-light mt-2 text-left mx-auto mt-4">Copy Code</button> 
       
         <h3 class="mb-4 text-2xl mt-4">Preview</h3>
         <iframe id="codeFrame" class="form-control mt-4" srcdoc="{{ code }}" style="width:100%; height:650px;"></iframe>
+
+        
+      </div>
 
 {% else %}
 <!-- {% if current_user.is_authenticated %}
@@ -474,6 +485,11 @@
         }, 10);
         }
     }
+
+    function showLoadingAnimation() {
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+  }
 
     window.onload = function() {
         var clickCount = getCookie('clickCount') || 0;
